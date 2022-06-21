@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/public/styles.css">
+  <link rel="icon" href="public/favicon.ico" />
   <script src="/utils/constants.js"></script>
   <title>retard chat</title>
 </head>
@@ -57,20 +58,16 @@
 
       wsClient.onmessage = (MessageEvent) =>{
         const message = MessageEvent.data;
-        // showMessageReceived(message);
         const {type, payload} = JSON.parse(message);
         if(type == SERVER.BROADCAST.NEW_USER_WITH_TIME){
           showMessageReceived(`<em> ${payload.userName} has joined the chat at ${payload.time} </em>`);
         }else if (type === CLIENT.MESSAGE.NEW_MESSAGE) {
           showMessageReceived(`<strong>${payload.userName}</strong><br/> ${payload.message}`);
-        } // else if (type === 'USER_LEFT') {
-        //   showMessageReceived(`${payload.username} has left the chat`);
-        // }
+        }
         else {
           return;
         }
       }
-
 
       wsClient.onclose = (event) => {
         showMessageReceived('No WebSocket connection :(');
